@@ -5,7 +5,7 @@ const aws = require('aws-sdk');
 async function run() {
   try {
     // Get input
-    const region = core.getInput("region", {required: true});
+    const region = core.getInput("region", {required: false});
     const registryId = core.getInput("registry-id", {required: false});
     const repositoryName = core.getInput("repository-name", {required: true});
     const sourceImageTag = core.getInput("source-image-tag", {required: true});

@@ -3,7 +3,7 @@ description: 'Tags an AWS ECR Docker image without pulling it'
 inputs:
   region:
     description: 'The AWS region'
-    required: true
+    required: false
   registry-id:
     description: 'The AWS account ID associated with the registry that contains the repository and image'
     required: false
