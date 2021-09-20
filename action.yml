@@ -1,5 +1,8 @@
 name: 'Docker Tag for AWS ECR'
 description: 'Tags an AWS ECR Docker image without pulling it'
+branding:
+  icon: 'cloud'
+  color: 'orange'
 inputs:
   region:
     description: 'The AWS region'

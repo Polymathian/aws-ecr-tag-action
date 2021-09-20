@@ -5,14 +5,13 @@ const aws = require('aws-sdk');
 async function run() {
   try {
     // Get input
-    const region = core.getInput("region", {required: false});
     const registryId = core.getInput("registry-id", {required: false});
     const repositoryName = core.getInput("repository-name", {required: true});
     const sourceImageTag = core.getInput("source-image-tag", {required: true});
     const targetImageTag = core.getInput("target-image-tag", {required: true});
 
     // Create required resources
-    const ecr = new aws.ECR({region});
+    const ecr = new aws.ECR();
 
     // Fetch image manifest from ECR
     core.info(`Fetching image data for ${repositoryName}:${sourceImageTag}.`);
