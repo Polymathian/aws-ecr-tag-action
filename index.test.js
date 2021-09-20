@@ -2,7 +2,7 @@
 // const cp = require('child_process');
 // const path = require('path');
 
-test('throws invalid number', async () => {
+test('placeholder', async () => {
   console.log("TODO write tests");
 });
 

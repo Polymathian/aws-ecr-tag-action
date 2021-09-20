@@ -6,6 +6,7 @@ This is a third-party action and not maintained by Amazon.
 
 # Inputs
 
+* `region` The AWS region to connect to
 * `registry-id` Optional. The AWS account ID associated with the registry that contains the repository and image. If you do not specify a registry, the default registry is assumed.
 * `repository-name` The name of the repository in which to get and put the image.
 * `source-image-tag` The existing tag to find the image.
