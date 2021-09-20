@@ -1,18 +1,39 @@
 const core = require('@actions/core');
-const wait = require('./wait');
+const aws = require('aws-sdk');
 
 
-// most @actions toolkit packages have async methods
 async function run() {
   try {
-    const ms = core.getInput('milliseconds');
-    core.info(`Waiting ${ms} milliseconds ...`);
+    // Get input
+    const registryId = core.getInput("registry-id", {required: false});
+    const repositoryName = core.getInput("repository-name", {required: true});
+    const sourceImageTag = core.getInput("source-image-tag", {required: true});
+    const targetImageTag = core.getInput("target-image-tag", {required: true});
 
-    core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    await wait(parseInt(ms));
-    core.info((new Date()).toTimeString());
+    // Create required resources
+    const ecr = new aws.ECR();
 
-    core.setOutput('time', new Date().toTimeString());
+    // Fetch image manifest from ECR
+    core.info(`Fetching image data for ${repositoryName}:${sourceImageTag}.`);
+    const getImageResp = await ecr.batchGetImage({
+      registryId,
+      repositoryName,
+      imageIds: [{imageTag: sourceImageTag}],
+    });
+    const image = getImageResp.images[0];
+    const imageDigest = image.imageId.imageDigest;
+    const imageManifest = image.imageManifest;
+    const imageManifestMediaType = image.imageManifestMediaType;
+
+    // Put image manifest on ECR with new tag
+    core.info(`Putting tag ${repositoryName}:${targetImageTag} on digest ${imageDigest}.`);
+    await ecr.putImage({
+      registryId,
+      repositoryName,
+      imageManifest,
+      imageManifestMediaType,
+      imageTag: targetImageTag,
+    });
   } catch (error) {
     core.setFailed(error.message);
   }

@@ -1,13 +1,18 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'Docker Tag for AWS ECR'
+description: 'Tags an AWS ECR Docker image without pulling it'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  registry-id:
+    description: 'The AWS account ID associated with the registry that contains the repository and image'
+    required: false
+  repository-name:
+    description: 'The name of the repository in which to get and put the image'
     required: true
-    default: '1000'
-outputs:
-  time: # output will be available to future steps
-    description: 'The message to output'
+  source-image-tag:
+    description: 'The existing tag to find the image'
+    required: true
+  target-image-tag:
+    description: 'The new tag to add to the image'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'
