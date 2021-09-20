@@ -4,9 +4,6 @@ branding:
   icon: 'cloud'
   color: 'orange'
 inputs:
-  region:
-    description: 'The AWS region'
-    required: false
   registry-id:
     description: 'The AWS account ID associated with the registry that contains the repository and image'
     required: false
